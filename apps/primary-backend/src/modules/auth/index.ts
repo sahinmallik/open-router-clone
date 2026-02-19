@@ -1,4 +1,3 @@
-import { ModelSelectScalar } from "./../../../../../packages/db/generated/prisma/models/Model";
 import { Elysia } from "elysia";
 import { AuthModel } from "./model";
 import { AuthService } from "./service";
