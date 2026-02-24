@@ -29,6 +29,8 @@ model ApiKey{
   name                  String
   apiKey                String
   disabled              Boolean                                                       @default(false)
+  creditUsed            Int             @default(0)
+  lastUsed              DateTime        @default(now())
   deleted               Boolean                                                       @default(false)
   user                  User            @relation(fields: [userId],references: [id])
   conversations         Conversation[]
