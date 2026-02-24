@@ -1,9 +1,8 @@
-import { ApiKey } from "./../../../../../packages/db/generated/prisma/client";
 import { prisma } from "db";
 
-const API_KEY_LENGTH = 20;
+const API_KEY_LENGTH = 100;
 const API_KEY_GENERATOR_STRING =
-  "qwertyuioplkjhgfdsazxcvbnmQWERTYUIOPLKJHGFDSAZXCVBNM12345678900987654321QWERTYUIOPASDFGHJKLMNBVCXZ";
+  "qwertyuioplkjhgfdsazxcvbnmQWERTYUIOPLKJHGFDSAZXCVBNM12345678900987654321QWERTYUIOPASDFGHJKLMNBVCXZsdfghgfdsxcvhjkmnbvcfgyuiuytfdghjkmnbvgSERTYUIKUYTRESZXCVGHJUI87654345678908UYGHJKMNBVCXSWE3Eiuytrdsfghjkmnbvcde3234567890okjuytredcvgbhjkiu7654edfAQASDXZXCVBNMKLO98U7YTREWSDFGHJNHYTRESDFG";
 export abstract class ApiKeyServies {
   static generateApikey() {
     let suffix = "";
