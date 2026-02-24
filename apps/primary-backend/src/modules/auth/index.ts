@@ -1,8 +1,15 @@
 import { Elysia } from "elysia";
 import { AuthModel } from "./model";
 import { AuthService } from "./service";
+import { jwt } from "@elysiajs/jwt";
 
 export const app = new Elysia({ prefix: "auth" })
+  .use(
+    jwt({
+      name: "jwt",
+      secret: "Bristi",
+    }),
+  )
   .post(
     "/sign-up",
     async ({ body, status }) => {
@@ -27,11 +34,26 @@ export const app = new Elysia({ prefix: "auth" })
   )
   .post(
     "/sign-in",
-    async ({ body }) => {
-      const token = await AuthService.signin(body.email, body.password);
-      return {
-        token,
-      };
+    async ({ body, jwt, cookie: { auth }, status }) => {
+      const { correctCredential, userId } = await AuthService.signin(
+        body.email,
+        body.password,
+      );
+      if (correctCredential && userId) {
+        const token = await jwt.sign({ userId });
+        auth.set({
+          value: token,
+          httpOnly: true,
+          maxAge: 7 * 86400,
+        });
+        return {
+          message: "Signed in successfully",
+        };
+      } else {
+        return status(403, {
+          message: "Invalid Credentials",
+        });
+      }
     },
     {
       body: AuthModel.signinSchema,

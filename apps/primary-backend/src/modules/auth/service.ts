@@ -1,5 +1,5 @@
 import { prisma } from "db";
-
+import { jwt } from "@elysiajs/jwt";
 export abstract class AuthService {
   static async signup(email: string, password: string): Promise<string> {
     const user = await prisma.user.create({
@@ -10,7 +10,23 @@ export abstract class AuthService {
     });
     return user.id.toString();
   }
-  static async signin(email: string, password: string): Promise<string> {
-    return "token-123";
+  static async signin(
+    email: string,
+    password: string,
+  ): Promise<{ correctCredential: boolean; userId?: string }> {
+    const user = await prisma.user.findFirst({
+      where: {
+        email,
+      },
+    });
+    console.log(user);
+    if (!user) {
+      return { correctCredential: false };
+    }
+    if (!(await Bun.password.verify(password, user.password))) {
+      console.log(await Bun.password.verify(password, user.password));
+      return { correctCredential: false };
+    }
+    return { correctCredential: true, userId: user.id.toString() };
   }
 }
