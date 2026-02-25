@@ -7,7 +7,7 @@ export const app = new Elysia({ prefix: "apikeys" })
   .use(
     jwt({
       name: "jwt",
-      secret: "Bristi",
+      secret: process.env.JWT_SECRET!,
     }),
   )
   .resolve(async ({ jwt, status, cookie: { auth } }) => {

@@ -7,7 +7,7 @@ export const app = new Elysia({ prefix: "auth" })
   .use(
     jwt({
       name: "jwt",
-      secret: "Bristi",
+      secret: process.env.JWT_SECRET!,
     }),
   )
   .post(

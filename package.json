@@ -22,6 +22,7 @@
     "packages/*"
   ],
   "dependencies": {
-    "@elysiajs/jwt": "^1.4.0"
+    "@elysiajs/jwt": "^1.4.0",
+    "stripe": "^20.3.1"
   }
 }
